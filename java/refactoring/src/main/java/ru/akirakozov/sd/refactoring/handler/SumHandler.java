@@ -3,15 +3,16 @@ package ru.akirakozov.sd.refactoring.handler;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
-public class SumHandler extends AbstractHandler {
+public class SumHandler extends AbstractReadHandler {
+    public SumHandler() {
+        super("SELECT SUM(price) FROM PRODUCT",
+                response -> rs -> response.getWriter().println(rs.getInt(1)));
+    }
+
     @Override
-    public void handle(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        writeResponse(response,
-                "SELECT SUM(price) FROM PRODUCT",
-                "Summary price: ",
-                rs -> {
-                    response.getWriter().println(rs.getInt(1));
-                });
+    protected void writeInfo(PrintWriter pw) {
+        pw.println("Summary price: ");
     }
 }
