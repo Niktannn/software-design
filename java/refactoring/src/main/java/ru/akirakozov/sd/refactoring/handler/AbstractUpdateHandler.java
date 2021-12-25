@@ -1,7 +1,5 @@
 package ru.akirakozov.sd.refactoring.handler;
 
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,7 +12,7 @@ public abstract class AbstractUpdateHandler extends AbstractHandler {
     }
 
     @Override
-    protected void executeCommand(Statement stmt, HttpServletRequest request,
+    protected void executeCommand(Statement stmt,
                                   HttpServletResponse response) throws SQLException, IOException {
         stmt.executeUpdate(query);
         writeInfo(response.getWriter());

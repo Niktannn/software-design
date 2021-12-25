@@ -2,7 +2,6 @@ package ru.akirakozov.sd.refactoring.handler;
 
 import ru.akirakozov.sd.refactoring.utils.CheckedConsumer;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,7 +19,7 @@ public abstract class AbstractReadHandler extends AbstractHandler {
     }
 
     @Override
-    protected void executeCommand(Statement stmt, HttpServletRequest request,
+    protected void executeCommand(Statement stmt,
                                   HttpServletResponse response) throws SQLException, IOException {
         ResultSet rs = stmt.executeQuery(query);
         response.getWriter().println("<html><body>");

@@ -1,6 +1,5 @@
 package ru.akirakozov.sd.refactoring.handler;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
@@ -15,18 +14,21 @@ public abstract class AbstractHandler {
         this.query = query;
     }
 
-    public void handle(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void handle(HttpServletResponse response) {
         try {
             try (Connection c = DriverManager.getConnection("jdbc:sqlite:test.db")) {
                 Statement stmt = c.createStatement();
-                executeCommand(stmt, request, response);
+                executeCommand(stmt, response);
                 stmt.close();
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+        response.setContentType("text/html");
+        response.setStatus(HttpServletResponse.SC_OK);
     }
 
-    protected abstract void executeCommand(Statement stmt, HttpServletRequest request,
+    protected abstract void executeCommand(Statement stmt,
                                            HttpServletResponse response) throws SQLException, IOException;
 }
